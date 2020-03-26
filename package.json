@@ -9,7 +9,8 @@
   "scripts": {
     "test": "tap test/**/*.test.js",
     "start": "ts-node --files ./server.ts",
-    "dev": "ts-node --files ./server.ts"
+    "dev": "ts-node --files ./server.ts",
+    "docker:buildx": "docker buildx build --platform linux/arm64,linux/amd64,linux/arm/v7 --push -t rootthekid/xuan-wu:latest  ."
   },
   "repository": {
     "type": "git",

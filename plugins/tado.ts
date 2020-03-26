@@ -10,7 +10,12 @@ const instance = axios.create({
   baseURL: 'https://my.tado.com/api/v2/homes/384414',
   validateStatus: function (status) { return status >= 200 && status < 300 }
 })
-const mqttClient = MQTT.connect('tcp://192.168.42.45:1883');
+
+const email = process.env.TADO_EMAIL;
+const password = process.env.TADO_PASSWORD;
+const mqttBroker = process.env.MQTT_BROKER || 'eclipse-mosquitto';
+
+const mqttClient = MQTT.connect(`mqtt://${mqttBroker}`);
 
 const mqttPublishOpts: IClientPublishOptions = {
   qos: 0,
@@ -69,7 +74,7 @@ async function isAuthenticated(): Promise<boolean> {
 async function auth(err: any): Promise<boolean> {
   if (err.response.status === 401) {
     try {
-      const res = await getToken('kiwi.android.42@gmail.com', 'T0mmys_Tado!?')
+      const res = await getToken(email, password)
       instance.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.access_token
       return true
     } catch (error) {
