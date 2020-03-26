@@ -5,6 +5,9 @@ import * as Swagger from 'fastify-swagger';
 import Routes from './routes';
 import Tado from './plugins/tado';
 
+const serverAddress = process.env.ADDRESS || '0.0.0.0';
+const serverPort = +process.env.PORT || 3000;
+
 // Instantiate Fastify with some config
 const server: Fastify.FastifyInstance<
   Server,
@@ -45,7 +48,7 @@ server.register(Tado);
 // Start listening.
 const start = async (): Promise<void> => {
   try {
-    await server.listen(3000, '0.0.0.0');
+    await server.listen(serverPort, serverAddress);
     server.swagger();
   } catch (err) {
     server.log.error(err);
