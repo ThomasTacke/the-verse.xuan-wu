@@ -5,7 +5,7 @@
 
 const Fastify = require('fastify')
 const fp = require('fastify-plugin')
-const App = require('../app')
+const App = require('../server')
 
 // Fill in this config with all the configurations
 // needed for testing the application
